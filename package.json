@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "cross-env NODE_ENV=production node server/index.js",
+    "start" : "cross-env NODE_ENV=prod node server/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon server/index.js",
     "test": "cross-env NODE_ENV=test jest"
   },

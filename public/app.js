@@ -11,7 +11,6 @@ saveButton.addEventListener('click', (e) => {
     fetch('/posts', {
         method : "POST",
         headers: { "Content-Type": 'application/json'},
-        
         body: JSON.stringify({
             username: usernameInput.value,
             title: titleInput.value,
@@ -80,7 +79,19 @@ fetch('/posts')
             section.appendChild(p);
             section.appendChild(a);
             
+            const ul = document.createElement('ul');
+
+            if(post.categories[0] !== null){
+                post.categories.forEach((category) => {
+                    const li = document.createElement('li');
+                    li.textContent = category;
+                    ul.append(li);
+                });
+            }
+
             const hr = document.createElement('hr');
+
+            section.appendChild(ul);
 
             postsDiv.appendChild(section);
             postsDiv.appendChild(hr);

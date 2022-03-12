@@ -1,11 +1,13 @@
 const getPostsQuery = require("./posts/getPostsQuery");
-const getPostCommentsQuery = require('./comments/getPostCommentsQuery');
-const getPostByIdQuery = require('./posts/getPostByIdQuery');
-const addPostQuery = require('./posts/addPostQuery');
+const addPostQuery = require("./posts/addPostQuery");
+const getSinglePostQuery = require("./posts/getSinglePostQuery");
+const getPostCommentsQuery = require("./comments/getPostCommentsQuery");
+const addCommentQuery = require("./comments/addCommentQuery");
 
 module.exports = {
-    getPostsQuery,
-    getPostCommentsQuery,
-    getPostByIdQuery,
-    addPostQuery,
-}
+  getPostsQuery,
+  getSinglePostQuery,
+  getPostCommentsQuery,
+  addPostQuery,
+  addCommentQuery
+};

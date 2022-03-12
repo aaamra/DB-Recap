@@ -1,74 +1,58 @@
-const connection = require('../server/database/config/connection');
-const build = require('../server/database/config/build');
-const { getPostsQuery, getPostCommentsQuery, addPostQuery } = require('../server/database/queries');
+const build = require("../server/database/config/build");
+const connection = require("../server/database/config/connection");
+const {
+  getPostsQuery,
+  addPostQuery,
+  getSinglePostQuery,
+  getPostCommentsQuery,
+  addCommentQuery,
+} = require("../server/database/queries");
 
+beforeEach(() => build());
 
-beforeEach(() => {
-    return build();
+afterAll(() => connection.end());
+
+test("add new post", () => {
+  const expeted = {
+    username: "karam",
+    title: "hello karam",
+    content: "content",
+  };
+
+  return addPostQuery(expeted).then((data) => {
+    expect(data.rows[0].title).toBe(expeted.title);
+    expect(data.rows[0].username).toBe(expeted.username);
+    expect(data.rows[0].content).toBe(expeted.content);
+  });
 });
 
-describe('posts queries', () => {
-    test('get all posts', () => {
-        const expected = [
-            {
-                id: 1,
-                username: 'abdallah',
-                title: 'Hello from DB',
-                content: 'bla bla blablablabla'
-            },
-            {
-                id: 2,
-                username: 'monther',
-                title: 'Hello from express',
-                content: 'bla bla blablablabla'
-            }
-        ];
-
-        return getPostsQuery().then((data) => {
-            expect(data.rows).toEqual(expected);
-        });
-
-    });
-
-    test('get all posts', () => {
-        const expected = [
-            { 
-                id: 1, 
-                username: 'ali', 
-                content: 'Hello from DB', 
-                post_id: 1 
-            },
-            {
-              id: 2,
-              username: 'monther',
-              content: 'Hello from express',
-              post_id: 1
-            }
-          ];
-
-        return getPostCommentsQuery(1).then((data) => {
-            expect(data.rows).toEqual(expected);
-        });
-
-    });
-
-    test('add new post', () => {
-        const expected = { 
-            username: 'ali', 
-            title: 'new Post', 
-            content: 'new content' 
-        };
-
-        return addPostQuery(expected).then((data) => {
-            expect(data.rows[0].username).toEqual(expected.username);
-            expect(data.rows[0].title).toEqual(expected.title);
-            expect(data.rows[0].content).toEqual(expected.content);
-        });
-
-    });
+test("get all posts", () => {
+  return getPostsQuery().then((data) => {
+    expect(data.rows.length).toBe(2);
+  });
 });
 
+test("show post query", () => {
+  return getSinglePostQuery(1).then((data) => {
+    expect(data.rows.length).toBe(1);
+    expect(data.rows[0].title).toBe("hello");
+  });
+});
 
-afterAll(() => {
-    return connection.end();
+test("show post query", () => {
+  return getPostCommentsQuery(1).then((data) => {
+    expect(data.rows.length).toBe(2);
+    expect(data.rows[0].username).toBe("ali");
+  });
+});
+
+test("Add new comment", () => {
+  return addCommentQuery({
+    postId: 1,
+    userName: "ali",
+    content: "hello new comment",
+  }).then((data) => {
+    expect(data.rows.length).toBe(1);
+    expect(data.rows[0].username).toBe("ali");
+  });
 });

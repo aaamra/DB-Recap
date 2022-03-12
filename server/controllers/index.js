@@ -1,13 +1,14 @@
-const allPosts = require("./posts/allPosts");
-const detailsPage = require('./pages/detailsPage');
-const getSinglePost = require('./posts/getSinglePost');
+const {getPosts, getSinglePost, addPost} = require('./posts');
+const detailsPage = require('./pages/details');
 const getPostComments = require('./comments/getPostComments');
-const addPost = require('./posts/addPost');
+const addComment = require('./comments/addComment');
+
 
 module.exports = {
-    allPosts,
-    detailsPage,
+    getPosts,
     getSinglePost,
+    detailsPage,
     getPostComments,
-    addPost
+    addPost,
+    addComment
 };

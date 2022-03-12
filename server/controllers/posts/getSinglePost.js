@@ -1,14 +1,11 @@
-const { getPostByIdQuery } = require("../../database/queries");
+const { getSinglePostQuery } = require('../../database/queries');
 
-const allSonglePost = (req, res) => {
-
+const getSinglePost = (req, res) => {
     const { id } = req.params;
 
-    getPostByIdQuery(id)
-    .then(data => {
-        res.json(data.rows[0]);
-    }).catch(err => res.status(500).json({error: "server error !"}));
+    getSinglePostQuery(id)
+        .then(data => res.json(data.rows[0]))
+        .catch(() => res.status(500).json({ message: "server error !" }))   
 };
 
-
-module.exports = allSonglePost;
+module.exports = getSinglePost;

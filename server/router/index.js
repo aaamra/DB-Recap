@@ -1,16 +1,23 @@
-const express = require('express');
-const { allPosts, detailsPage, getSinglePost, getPostComments, addPost } = require('../controllers');
+const express = require("express");
+
+const {
+  getPosts,
+  getSinglePost,
+  detailsPage,
+  getPostComments,
+  addPost,
+  addComment
+} = require("../controllers");
 
 const router = express.Router();
 
+router.get("/posts", getPosts);
+router.post("/posts", addPost);
+router.get("/posts/:id", getSinglePost);
+router.get("/posts/:id/show", detailsPage);
+router.get("/posts/:id/comments", getPostComments);
 
-router.get('/posts', allPosts);
-router.post('/posts', addPost);
 
-router.get('/posts/:id/show', detailsPage);
-
-router.get('/posts/:id/comments', getPostComments);
-
-router.get('/posts/:id', getSinglePost);
+router.post("/posts/:id/comments", addComment);
 
 module.exports = router;

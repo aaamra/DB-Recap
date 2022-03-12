@@ -1,15 +1,16 @@
-const { addPostQuery } = require("../../database/queries");
+const { addPostQuery } = require('../../database/queries');
 
-const addPost = (req, res) => {
 
+const addPost = (req ,res) => {
+    
     addPostQuery(req.body)
-    .then(data => {
-        res.json({
-            message: 'post added successfully !',    
+    .then((data) => {
+        res.status(201).json({
+            message: 'post added successflly !',
             post: data.rows[0]
         });
-    }).catch(err => res.status(500).json({error: "server error !"}));
-};
+    }).catch(() => res.json({ message: "error" }));
 
+};
 
 module.exports = addPost;
