@@ -1,38 +1,42 @@
 begin;
 
-DROP TABLE IF EXISTS posts, comments, categories, category_post CASCADE;
+drop table if exists posts, categories, category_post, comments cascade;
 
-CREATE TABLE posts(
-    id SERIAL PRIMARY KEY,
-    username varchar(50) NOT NULL,
-    title varchar(100) NOT NULL,
-    content TEXT NOT NULL
+create table posts(
+    id serial primary key,
+    username varchar(100) not null,
+    title varchar(100) not null,
+    content text not null
 );
 
-CREATE TABLE comments(
-    id SERIAL PRIMARY KEY,
-    username varchar(50) not null,
-    content TEXT NOT NULL,
+create table categories(
+    id serial primary key,
+    name varchar(100) not null,
+    color varchar(100) default 'red'
+);
+
+create table category_post(
+    id serial primary key,
     post_id int,
-    FOREIGN KEY (post_id) REFERENCES posts(id)
-);
-
-CREATE TABLE categories(
-    id SERIAL PRIMARY KEY,
-    name varchar(20) not null,
-    color varchar(20)
-);
-
-CREATE TABLE category_post(
-    id SERIAL PRIMARY KEY,
     category_id int,
+    foreign key (post_id) references posts(id),
+    constraint fk_category_id foreign key (category_id) references categories(id)
+    -- primary key(post_id, category_id)
+);
+
+create table comments(
+    id serial primary key,
+    username varchar(100),
+    content text,
     post_id int,
-    FOREIGN KEY (post_id) REFERENCES posts(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    foreign key (post_id) references posts(id) on delete cascade
 );
 
 
-insert into posts(title,content,username) values('hello','bla dsadasdasd', 'ali') , ('hello2','bla dsadasdasd', 'ali2');
-insert into comments(content,username, post_id) values('comment 1', 'ali', 1), ('comment 2', 'ahmed', 1) , ('hello comment', 'ali2', 2);
+insert into posts(username, title,content) values('ali', 'IDK', 'hello world'), ('ahmed', 'IDK2', 'hello world2');
+insert into categories(name) values('news'),('sports'), ('music');
+insert into comments(username, content,post_id) values('ahmed', 'idk', 1),('abdallah', 'idk', 1);
+
+insert into category_post(post_id, category_id) values(1, 1),(1, 2);
 
 commit;
