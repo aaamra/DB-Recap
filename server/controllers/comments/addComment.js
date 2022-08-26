@@ -1,7 +1,7 @@
 const addCommentQuery = require("../../database/queries/comments/addCommentQuery");
 
 const addComment = (req, res) => {
-  const { id : postId } = req.params;
+  const { id: postId } = req.params;
   const { content, userName } = req.body;
 
   addCommentQuery({ postId, content, userName })

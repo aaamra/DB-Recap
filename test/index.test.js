@@ -17,12 +17,14 @@ test("add new post", () => {
     username: "karam",
     title: "hello karam",
     content: "content",
+    categories: [1, 2, 3],
   };
 
   return addPostQuery(expeted).then((data) => {
-    expect(data.rows[0].title).toBe(expeted.title);
-    expect(data.rows[0].username).toBe(expeted.username);
-    expect(data.rows[0].content).toBe(expeted.content);
+    console.log(data);
+    expect(data.title).toBe(expeted.title);
+    expect(data.username).toBe(expeted.username);
+    expect(data.content).toBe(expeted.content);
   });
 });
 
@@ -35,14 +37,14 @@ test("get all posts", () => {
 test("show post query", () => {
   return getSinglePostQuery(1).then((data) => {
     expect(data.rows.length).toBe(1);
-    expect(data.rows[0].title).toBe("hello");
+    expect(data.rows[0].title).toBe("IDK");
   });
 });
 
 test("show post query", () => {
   return getPostCommentsQuery(1).then((data) => {
     expect(data.rows.length).toBe(2);
-    expect(data.rows[0].username).toBe("ali");
+    expect(data.rows[0].username).toBe("ahmed");
   });
 });
 
